@@ -1,6 +1,7 @@
 import Cupcake from "../components/Cupcake";
 
 /* ************************************************************************* */
+
 const sampleCupcakes: CupcakeArray = [
   {
     id: 10,
@@ -33,13 +34,18 @@ const sampleCupcakes: CupcakeArray = [
 
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
+
 /* ************************************************************************* */
 
 function CupcakeList() {
   // Step 1: get all cupcakes
-
+  const allCupcakes = sampleCupcakes.map((cupcake: Cupcake) => (
+    <li key={cupcake.id}>{cupcake.name}</li>
+  ));
   // Step 3: get all accessories
-
+  const cupcakesAccessories = sampleCupcakes.map((cupcake: Cupcake) => (
+    <option key={cupcake.id}>{cupcake.accessory}</option>
+  ));
   // Step 5: create filter state
 
   return (
@@ -51,12 +57,15 @@ function CupcakeList() {
           Filter by{" "}
           <select id="cupcake-select">
             <option value="">---</option>
-            {/* Step 4: add an option for each accessory */}
+            {
+              /* Step 4: add an option for each accessory */
+              cupcakesAccessories
+            }
           </select>
         </label>
       </form>
       <ul className="cupcake-list" id="cupcake-list">
-        {/* Step 2: repeat this block for each cupcake */}
+        {/* Step 2: repeat this block for each cupcake */ allCupcakes}
         {/* Step 5: filter cupcakes before repeating */}
         <li className="cupcake-item">
           <Cupcake data={sampleCupcakes[0]} />
