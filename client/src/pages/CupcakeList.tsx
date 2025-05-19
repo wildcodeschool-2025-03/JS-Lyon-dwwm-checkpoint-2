@@ -10,6 +10,11 @@ interface data {
   color3: string;
   name: string;
 }
+interface acc {
+  id: number;
+  name: string;
+  slug: string;
+}
 
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
@@ -17,11 +22,19 @@ interface data {
 
 function CupcakeList() {
   const [cupcakes, setCupcakes] = useState<data[]>([]);
+  const [accessories, setAccessories] = useState<acc[]>([]);
+
   useEffect(() => {
     fetch("http://localhost:3310/api/cupcakes")
       .then((response) => response.json())
       .then((data) => setCupcakes(data));
+
+    fetch("http://localhost:3310/api/accessories")
+      .then((response) => response.json())
+      .then((data) => setAccessories(data));
   }, []);
+
+  console.info(accessories);
 
   // Step 3: get all accessories
 
