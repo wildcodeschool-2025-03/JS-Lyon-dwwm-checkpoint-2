@@ -32,6 +32,16 @@ const sampleCupcakes: CupcakeArray = [
   },
 ];
 
+type Accessory = {
+  accessory: string;
+  accessory_id: string;
+  color1: string;
+  color2: string;
+  color3: string;
+  id: number;
+  name: string;
+};
+
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
 /* ************************************************************************* */
@@ -39,7 +49,7 @@ const sampleCupcakes: CupcakeArray = [
 function CupcakeList() {
   // Step 1: get all cupcakes
   const [accessories, setAccessories] = useState<CupcakeArray>(sampleCupcakes);
-  const [cupcakes, setCupcakes] = useState<CupcakeArray>(sampleCupcakes);
+  const [cupcakes, setCupcakes] = useState<Accessory[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3310/api/cupcakes")
