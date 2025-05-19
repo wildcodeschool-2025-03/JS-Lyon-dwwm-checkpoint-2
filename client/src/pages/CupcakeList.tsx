@@ -11,6 +11,7 @@ function CupcakeList() {
   // Step 1: get all cupcakes
 
   const [cupcakes, setCupcakes] = useState<Cupcake[]>([]);
+  const [accessories, setAccessories] = useState<Accessory[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3310/api/cupcakes")
@@ -18,7 +19,14 @@ function CupcakeList() {
       .then((cakesJson) => {
         setCupcakes(cakesJson);
       });
+    fetch("http://localhost:3310/api/accessories")
+      .then((resultRequest) => resultRequest.json())
+      .then((accessoriesJson) => {
+        setAccessories(accessoriesJson);
+      });
   }, []);
+
+  console.info(accessories);
 
   // Step 3: get all accessories
 

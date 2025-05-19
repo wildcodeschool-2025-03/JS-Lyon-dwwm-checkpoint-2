@@ -1,3 +1,9 @@
+type Accessory = {
+  id: number;
+  name: string;
+  slug: string;
+};
+
 type Cupcake = {
   id: number;
   accessory_id: string;
