@@ -1,5 +1,5 @@
+import { useEffect, useState } from "react";
 import Cupcake from "../components/Cupcake";
-
 /* ************************************************************************* */
 
 const sampleCupcakes: CupcakeArray = [
@@ -39,11 +39,23 @@ const sampleCupcakes: CupcakeArray = [
 
 function CupcakeList() {
   // Step 1: get all cupcakes
-  const allCupcakes = sampleCupcakes.map((cupcake: Cupcake) => (
-    <li key={cupcake.id}>{cupcake.name}</li>
+  const [cupcakes, setCupcakes] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3310/api/cupcakes")
+      .then((response) => response.json())
+      .then((data) => {
+        setCupcakes(data);
+      });
+  }, []);
+
+  const allCupcakes = cupcakes.map((cupcake: Cupcake) => (
+    <li className="cupcake-item" key={cupcake.id}>
+      <Cupcake data={cupcake} />
+    </li>
   ));
+
   // Step 3: get all accessories
-  const cupcakesAccessories = sampleCupcakes.map((cupcake: Cupcake) => (
+  const cupcakesAccessories = cupcakes.map((cupcake: Cupcake) => (
     <option key={cupcake.id}>{cupcake.accessory}</option>
   ));
   // Step 5: create filter state
