@@ -16,13 +16,10 @@ interface acc {
   slug: string;
 }
 
-/* you can use sampleCupcakes if you're stucked on step 1 */
-/* if you're fine with step 1, just ignore this ;) */
-/* ************************************************************************* */
-
 function CupcakeList() {
   const [cupcakes, setCupcakes] = useState<data[]>([]);
   const [accessories, setAccessories] = useState<acc[]>([]);
+  const [selectedAccessory, setSelectedAccessory] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:3310/api/cupcakes")
@@ -33,8 +30,6 @@ function CupcakeList() {
       .then((response) => response.json())
       .then((data) => setAccessories(data));
   }, []);
-
-  console.info(accessories);
 
   // Step 3: get all accessories
 
@@ -47,10 +42,15 @@ function CupcakeList() {
         <label htmlFor="cupcake-select">
           {/* Step 5: use a controlled component for select */}
           Filter by{" "}
-          <select id="cupcake-select">
-            {accessories.map((accessorie) => (
-              <option key={accessorie.id} value="">
-                {accessorie.name}
+          <select
+            id="cupcake-select"
+            value={selectedAccessory}
+            onChange={(e) => setSelectedAccessory(e.target.value)}
+          >
+            <option value="">---</option>
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
               </option>
             ))}
             {/* Step 4: add an option for each accessory */}
@@ -60,11 +60,17 @@ function CupcakeList() {
       <ul className="cupcake-list" id="cupcake-list">
         {/* Step 2: repeat this block for each cupcake */}
         {/* Step 5: filter cupcakes before repeating */}
-        {cupcakes.map((cupcake) => (
-          <li className="cupcake-item" key={cupcake.id}>
-            <Cupcake data={cupcake} />
-          </li>
-        ))}
+        {cupcakes
+          .filter((cupcake) =>
+            selectedAccessory === ""
+              ? true
+              : cupcake.accessory_id === selectedAccessory,
+          )
+          .map((cupcake) => (
+            <li className="cupcake-item" key={cupcake.id}>
+              <Cupcake data={cupcake} />
+            </li>
+          ))}
         {/* end of block */}
       </ul>
     </>
