@@ -34,12 +34,14 @@ const sampleCupcakes: CupcakeArray = [
 
 /* you can use sampleCupcakes if you're stucked on step 1 */
 /* if you're fine with step 1, just ignore this ;) */
-
+//http://localhost:3310/api/accessories
 /* ************************************************************************* */
 
 function CupcakeList() {
   // Step 1: get all cupcakes
   const [cupcakes, setCupcakes] = useState([]);
+  const [accessories, setAccessories] = useState([]);
+
   useEffect(() => {
     fetch("http://localhost:3310/api/cupcakes")
       .then((response) => response.json())
@@ -48,6 +50,13 @@ function CupcakeList() {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("http://localhost:3310/api/accessories")
+      .then((response) => response.json())
+      .then((data) => {
+        setAccessories(data);
+      });
+  }, []);
   const allCupcakes = cupcakes.map((cupcake: Cupcake) => (
     <li className="cupcake-item" key={cupcake.id}>
       <Cupcake data={cupcake} />
@@ -55,8 +64,8 @@ function CupcakeList() {
   ));
 
   // Step 3: get all accessories
-  const cupcakesAccessories = cupcakes.map((cupcake: Cupcake) => (
-    <option key={cupcake.id}>{cupcake.accessory}</option>
+  const cupcakesAccessories = accessories.map((accessories: Cupcake) => (
+    <option key={accessories.id}>{accessories.name}</option>
   ));
   // Step 5: create filter state
 
