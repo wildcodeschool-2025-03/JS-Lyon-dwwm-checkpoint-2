@@ -38,6 +38,7 @@ const sampleCupcakes: CupcakeArray = [
 
 function CupcakeList() {
   // Step 1: get all cupcakes
+  const [accessories, setAccessories] = useState<CupcakeArray>(sampleCupcakes);
   const [cupcakes, setCupcakes] = useState<CupcakeArray>(sampleCupcakes);
 
   useEffect(() => {
@@ -50,7 +51,17 @@ function CupcakeList() {
       .catch((err) => {
         console.error("Erreur de récupération des cupcakes :", err);
       });
+
+    fetch("http://localhost:3310/api/accessories")
+      .then((res) => res.json())
+      .then((data) => {
+        setAccessories(data);
+      })
+      .catch((err) => {
+        console.error("Erreur de récupération des accessoires :", err);
+      });
   }, []);
+
   console.info(cupcakes);
   // Step 3: get all accessories
 
@@ -66,6 +77,11 @@ function CupcakeList() {
           <select id="cupcake-select">
             <option value="">---</option>
             {/* Step 4: add an option for each accessory */}
+            {accessories.map((accessory) => (
+              <option key={accessory.id} value={accessory.id}>
+                {accessory.name}
+              </option>
+            ))}
           </select>
         </label>
       </form>
